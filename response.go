@@ -60,6 +60,9 @@ func (r *Response) FileName() string {
 
 func (r *Response) fixCharset(detectCharset bool, defaultEncoding string) error {
 	if defaultEncoding != "" {
+		if strings.Contains(defaultEncoding, "utf-8") || strings.Contains(defaultEncoding, "utf8") {
+			return nil
+		}
 		tmpBody, err := encodeBytes(r.Body, "text/plain; charset="+defaultEncoding)
 		if err != nil {
 			return err
