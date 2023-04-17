@@ -66,6 +66,9 @@ func (r *Response) fixCharset(detectCharset bool, defaultEncoding string) error 
 		return nil
 	}
 	if defaultEncoding != "" {
+		if strings.Contains(defaultEncoding, "utf-8") || strings.Contains(defaultEncoding, "utf8") {
+			return nil
+		}
 		tmpBody, err := encodeBytes(r.Body, "text/plain; charset="+defaultEncoding)
 		if err != nil {
 			return err
